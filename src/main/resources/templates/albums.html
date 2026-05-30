@@ -27,7 +27,7 @@
 
       <input type="text"
              name="query"
-             placeholder="Search albums, artists or genres...">
+             placeholder="Search albums...">
 
       <button type="submit">
         Search
@@ -50,32 +50,129 @@
 
   <br>
 
-  <div class="album-grid">
+  <!-- Альбомы из БД -->
+  <div th:unless="${externalResults}">
 
-    <div class="card"
-         th:each="album : ${albums}">
+    <div class="album-grid">
 
-      <img th:src="${album.coverUrl}"
-           alt="Album cover"
-           class="album-cover">
+        <div class="album-card"
+             th:each="album : ${albums}">
 
-      <br><br>
+          <img th:if="${album.coverUrl != null}"
+               th:src="${album.coverUrl}"
+               alt="Album cover"
+               class="album-cover">
 
-      <h3 th:text="${album.title}"></h3>
+          <div th:unless="${album.coverUrl != null}"
+               class="album-cover-placeholder">
 
-      <p class="album-meta">
+            No Cover
 
-        <span th:text="${album.artist}"></span>
+          </div>
 
-        <span>•</span>
+          <h3 th:text="${album.title}"></h3>
 
-        <span th:text="${album.genre}"></span>
+          <p class="album-meta">
 
-      </p>
+            <span th:text="${album.artist}"></span>
 
-      <a th:href="@{/albums/{id}(id=${album.id})}">
-        Open album
-      </a>
+            •
+
+            <span th:text="${album.genre}"></span>
+
+            •
+
+            <span th:text="${album.releaseYear}"></span>
+
+          </p>
+
+          <a th:href="@{/albums/{id}(id=${album.id})}">
+            Open album
+          </a>
+
+        </div>
+
+
+
+    </div>
+
+  </div>
+
+  <!-- Альбомы из MusicBrainz -->
+  <div th:if="${externalResults}">
+
+    <h2 class="section-title">
+      Albums found online
+    </h2>
+
+    <div class="album-grid">
+
+        <div class="album-card"
+             th:each="album : ${albums}">
+
+          <img th:if="${album.coverUrl != null}"
+               th:src="${album.coverUrl}"
+               alt="Album cover"
+               class="album-cover">
+
+          <div th:unless="${album.coverUrl != null}"
+               class="album-cover-placeholder">
+
+            No Cover
+
+          </div>
+
+          <h3 th:text="${album.title}"></h3>
+
+          <p class="album-meta">
+
+            <span th:text="${album.artist}"></span>
+
+            •
+
+            <span th:text="${album.genre}"></span>
+
+            •
+
+            <span th:text="${album.releaseYear}"></span>
+
+          </p>
+
+          <form th:action="@{/albums/import}"
+                method="post">
+
+            <input type="hidden"
+                   name="coverUrl"
+                   th:value="${album.coverUrl}">
+
+            <input type="hidden"
+                   name="musicBrainzId"
+                   th:value="${album.musicBrainzId}">
+
+            <input type="hidden"
+                   name="title"
+                   th:value="${album.title}">
+
+            <input type="hidden"
+                   name="artist"
+                   th:value="${album.artist}">
+
+            <input type="hidden"
+                   name="releaseYear"
+                   th:value="${album.releaseYear}">
+            <input type="hidden"
+                   name="genre"
+                   th:value="${album.genre}">
+
+            <button type="submit">
+              Open album
+            </button>
+
+          </form>
+
+        </div>
+
+
 
     </div>
 

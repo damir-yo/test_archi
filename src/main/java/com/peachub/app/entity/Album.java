@@ -16,12 +16,13 @@ public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
+    private String musicBrainzId;
     private String title;
     private String artist;
     private String coverUrl;
     private Integer releaseYear;
     private String genre;
-    private Long externalId;
 
     @OneToMany(mappedBy = "album")
     private List<Review> reviews;

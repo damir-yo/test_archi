@@ -30,4 +30,11 @@ public class ExternalApiConfig {
                 .baseUrl("https://musicbrainz.org/ws/2")
                 .build();
     }
+
+    @Bean
+    public RestClient coverArtRestClient() {
+        return RestClient.builder()
+                .baseUrl("https://coverartarchive.org")
+                .build();
+    }
 }

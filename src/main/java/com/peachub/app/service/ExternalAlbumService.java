@@ -1,48 +1,57 @@
 package com.peachub.app.service;
 
 import com.peachub.app.dto.externalAlbum.ExternalAlbumDto;
-import com.peachub.app.dto.genius.GeniusAlbumDto;
-import com.peachub.app.dto.musicbrainz.MusicBrainzAlbumDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ExternalAlbumService {
 
     @Autowired
-    private GeniusApiService geniusApiService;
-
-    @Autowired
     private MusicBrainzService musicBrainzService;
 
-    public ExternalAlbumDto searchAlbum(String query) {
+    @Autowired
+    private CoverArtArchiveService coverArtArchiveService;
 
-        GeniusAlbumDto geniusAlbum =
-                geniusApiService.searchAlbum(query);
+    public List<ExternalAlbumDto> searchAlbums(String query) {
 
-        MusicBrainzAlbumDto musicBrainzAlbum =
-                musicBrainzService.searchAlbum(query);
+        var musicBrainzAlbums =
+                musicBrainzService.searchAlbums(query);
 
-        return new ExternalAlbumDto(
-                geniusAlbum != null
-                        ? geniusAlbum.title()
-                        : null,
+        return musicBrainzAlbums.stream()
+                .map(album -> {
 
-                geniusAlbum != null
-                        ? geniusAlbum.artist()
-                        : null,
+                    String coverUrl =
+                            coverArtArchiveService.getCoverUrl(
+                                    album.musicBrainzId()
+                            );
 
-                musicBrainzAlbum != null
-                        ? musicBrainzAlbum.releaseYear()
-                        : null,
+                    if (coverUrl == null) {
+                        return null;
+                    }
+                    System.out.println(
+                            "FINAL COVER = " + coverUrl
+                    );
+                    System.out.println(
+                            "GENRE = " + album.genre()
+                    );
+                    System.out.println(
+                            "EXTERNAL DTO GENRE = " + album.genre()
+                    );
+                    return new ExternalAlbumDto(
+                            album.musicBrainzId(),
+                            album.title(),
+                            album.artist(),
+                            album.releaseYear(),
+                            album.genre(),
+                            coverUrl
+                    );
+                })
+                .filter(java.util.Objects::nonNull)
+                .toList();
 
-                musicBrainzAlbum != null
-                        ? musicBrainzAlbum.genre()
-                        : null,
-
-                geniusAlbum != null
-                        ? geniusAlbum.coverUrl()
-                        : null
-        );
     }
+
 }

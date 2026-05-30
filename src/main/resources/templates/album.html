@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-
   <title>Album</title>
 
   <link rel="stylesheet" th:href="@{/css/style.css}">
@@ -15,77 +14,84 @@
 
   <div class="card">
 
-    <div style="display:flex; gap:40px; flex-wrap:wrap;">
+    <div class="album-header">
 
-      <div>
+      <div class="album-cover-wrapper">
 
-        <img th:src="${album.coverUrl}"
+        <img th:if="${album.coverUrl != null}"
+             th:src="${album.coverUrl}"
              alt="Album cover"
-             width="320">
+             class="album-cover-large">
+
+        <div th:unless="${album.coverUrl != null}"
+             class="album-cover-placeholder">
+          No Cover
+        </div>
 
       </div>
 
-      <div style="flex:1; min-width:280px;">
+      <div class="album-info">
 
-        <h1 th:text="${album.title}"></h1>
+        <h1 class="album-title"
+            th:text="${album.title}">
+        </h1>
 
         <p class="album-meta">
 
           <span th:text="${album.artist}"></span>
 
-          <span>•</span>
+          •
 
           <span th:text="${album.genre}"></span>
 
-          <span>•</span>
+          •
 
           <span th:text="${album.releaseYear}"></span>
 
         </p>
 
-        <br>
+        <div class="album-actions">
 
-        <a th:href="@{/albums/{id}/reviews/new(id=${album.id})}">
-          <button>
-            Write review
-          </button>
-        </a>
-
-        <br><br>
-
-        <div th:if="${!isFavorite}">
-
-          <form th:action="@{/favorites/{albumId}(albumId=${album.id})}"
-                method="post">
-
-            <button type="submit">
-              Add to favorites
+          <a th:href="@{/albums/{id}/reviews/new(id=${album.id})}">
+            <button>
+              Write review
             </button>
+          </a>
 
-          </form>
+          <div th:if="${!isFavorite}">
+
+            <form th:action="@{/favorites/{albumId}(albumId=${album.id})}"
+                  method="post">
+
+              <button type="submit">
+                Add to favorites
+              </button>
+
+            </form>
+
+          </div>
+
+          <div th:if="${isFavorite}">
+
+            <form th:action="@{/favorites/{albumId}/delete(albumId=${album.id})}"
+                  method="post">
+
+              <input type="hidden"
+                     name="source"
+                     value="album">
+
+              <button type="submit">
+                Remove from favorites
+              </button>
+
+            </form>
+
+          </div>
 
         </div>
 
-        <div th:if="${isFavorite}">
-
-          <form th:action="@{/favorites/{albumId}/delete(albumId=${album.id})}"
-                method="post">
-
-            <input type="hidden"
-                   name="source"
-                   value="album">
-
-            <button type="submit">
-              Remove from favorites
-            </button>
-
-          </form>
-
-        </div>
-
-        <br>
-
-        <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+        <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+             style="margin-top:30px;">
 
           <a th:href="@{/albums/{id}/edit(id=${album.id})}">
             Edit album
@@ -113,7 +119,9 @@
 
   </div>
 
-  <h2>Reviews</h2>
+  <h2 style="margin-top:40px;">
+    Reviews
+  </h2>
 
   <div th:if="${#lists.isEmpty(reviews)}">
 
@@ -134,9 +142,9 @@
       <h3>
 
         <a th:href="@{/albums/{albumId}/reviews/{reviewId}(
-                albumId=${album.id},
-                reviewId=${review.id}
-            )}"
+                    albumId=${album.id},
+                    reviewId=${review.id}
+                )}"
            th:text="${review.title != null and !#strings.isEmpty(review.title) ? review.title : 'Untitled Review'}">
 
           Review Title
@@ -145,7 +153,7 @@
 
       </h3>
 
-      <p th:text="${review.content}"></p>
+      <p th:text="${#strings.abbreviate(review.content, 250)}"></p>
 
       <small>
 

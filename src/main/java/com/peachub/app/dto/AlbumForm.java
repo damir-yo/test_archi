@@ -23,5 +23,5 @@ public class AlbumForm {
     @NotBlank(message = "Genre cannot be empty")
     private String genre;
 
-    private Long externalId;
+    private String musicBrainzId;
 }

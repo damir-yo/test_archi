@@ -1,8 +1,10 @@
 package com.peachub.app.controller;
 
 import com.peachub.app.dto.AlbumForm;
+import com.peachub.app.dto.externalAlbum.ExternalAlbumDto;
 import com.peachub.app.entity.Album;
 import com.peachub.app.service.AlbumService;
+import com.peachub.app.service.ExternalAlbumService;
 import com.peachub.app.service.FavoriteAlbumService;
 import com.peachub.app.service.ReviewService;
 import jakarta.validation.Valid;
@@ -24,6 +26,8 @@ public class AlbumController {
     private AlbumService albumService;
     @Autowired
     private FavoriteAlbumService favoriteAlbumService;
+    @Autowired
+    private ExternalAlbumService externalAlbumService;
 
     @GetMapping("/{id}")
     public String albumPage(
@@ -108,6 +112,17 @@ public class AlbumController {
             Model model
     ) {
 
+        var externalAlbums =
+                externalAlbumService.searchAlbums(query);
+
+        if (!externalAlbums.isEmpty()) {
+
+            model.addAttribute("albums", externalAlbums);
+            model.addAttribute("externalResults", true);
+
+            return "albums";
+        }
+
         model.addAttribute(
                 "albums",
                 albumService.search(query)
@@ -115,6 +130,7 @@ public class AlbumController {
 
         return "albums";
     }
+
 
     @GetMapping("/new")
     public String createAlbumPage(Model model) {
@@ -157,7 +173,7 @@ public class AlbumController {
         form.setGenre(album.getGenre());
         form.setReleaseYear(album.getReleaseYear());
         form.setCoverUrl(album.getCoverUrl());
-        form.setExternalId(album.getExternalId());
+        form.setMusicBrainzId(album.getMusicBrainzId());
 
         model.addAttribute("albumForm", form);
 
@@ -201,5 +217,36 @@ public class AlbumController {
         );
 
         return "top-albums";
+    }
+    @PostMapping("/import")
+    public String importAlbum(
+            @RequestParam String musicBrainzId,
+            @RequestParam String title,
+            @RequestParam String artist,
+            @RequestParam Integer releaseYear,
+            @RequestParam(required = false) String genre,
+            @RequestParam(required = false) String coverUrl
+    ){
+
+        Album existingAlbum =
+                albumService.findByMusicBrainzId(musicBrainzId);
+
+        if (existingAlbum != null) {
+            return "redirect:/albums/" + existingAlbum.getId();
+        }
+
+        Album album = new Album();
+
+        album.setMusicBrainzId(musicBrainzId);
+        album.setTitle(title);
+        album.setArtist(artist);
+        album.setReleaseYear(releaseYear);
+        album.setGenre(genre);
+        album.setCoverUrl(coverUrl);
+
+        Album savedAlbum =
+                albumService.save(album);
+
+        return "redirect:/albums/" + savedAlbum.getId();
     }
 }

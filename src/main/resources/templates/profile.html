@@ -74,7 +74,7 @@
 
   <div class="album-grid">
 
-    <div class="album-card"
+    <div class="card-review"
          th:each="review : ${reviews}">
 
       <h3>
@@ -138,7 +138,8 @@
          th:each="favorite : ${favorites}">
 
       <img th:src="${favorite.album.coverUrl}"
-           alt="Album cover">
+           alt="Album cover"
+           class="album-cover">
 
       <h3 th:text="${favorite.album.title}"></h3>
 
@@ -150,6 +151,9 @@
 
         <span th:text="${favorite.album.genre}"></span>
 
+        •
+
+        <span th:text="${favorite.album.releaseYear}"></span>
       </p>
 
       <br>

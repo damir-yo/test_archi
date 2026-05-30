@@ -17,7 +17,7 @@ public class MusicBrainzTestController {
     public String test() {
 
         return musicBrainzService
-                .searchAlbum("IGOR")
+                .searchAlbums("IGOR")
                 .toString();
     }
 }

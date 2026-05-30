@@ -2,11 +2,13 @@ package com.peachub.app.service;
 
 import com.peachub.app.dto.musicbrainz.MusicBrainzAlbumDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
-import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -16,8 +18,8 @@ public class MusicBrainzService {
     @Qualifier("musicBrainzRestClient")
     private RestClient restClient;
 
-    public MusicBrainzAlbumDto searchAlbum(String query) {
-
+    public List<MusicBrainzAlbumDto> searchAlbums(String query) {
+        System.out.println("USER QUERY = " + query);
         Map<String, Object> response =
                 restClient.get()
                         .uri(uriBuilder ->
@@ -35,55 +37,94 @@ public class MusicBrainzService {
                         .body(Map.class);
 
         var releaseGroups =
-                (java.util.List<Map>)
-                        response.get("release-groups");
-
-        if (releaseGroups.isEmpty()) {
-            return null;
+                (List<Map>) response.get("release-groups");
+        System.out.println(
+                "MB RESULTS = " +
+                        (releaseGroups == null ? 0 : releaseGroups.size())
+        );
+        if (releaseGroups == null || releaseGroups.isEmpty()) {
+            return List.of();
         }
 
-        Map firstResult = releaseGroups.get(0);
+        List<MusicBrainzAlbumDto> albums = new ArrayList<>();
 
-        String title =
-                (String) firstResult.get("title");
+        for (int i = 0; i < Math.min(40, releaseGroups.size()); i++) {
 
-        String artist = "";
+            Map result = releaseGroups.get(i);
 
-        var artistCredits =
-                (java.util.List<Map>)
-                        firstResult.get("artist-credit");
+            String title =
+                    (String) result.get("title");
 
-        if (!artistCredits.isEmpty()) {
+            String musicBrainzId =
+                    (String) result.get("id");
 
-            Map firstArtistCredit =
-                    artistCredits.get(0);
+            String artist = "";
 
-            Map artistMap =
-                    (Map) firstArtistCredit.get("artist");
+            var artistCredits =
+                    (List<Map>) result.get("artist-credit");
 
-            artist =
-                    (String) artistMap.get("name");
-        }
+            if (artistCredits != null &&
+                    !artistCredits.isEmpty()) {
 
-        Integer year = null;
+                Map firstArtistCredit =
+                        artistCredits.get(0);
 
-        String firstReleaseDate =
-                (String) firstResult.get("first-release-date");
+                Map artistMap =
+                        (Map) firstArtistCredit.get("artist");
 
-        if (firstReleaseDate != null
-                && firstReleaseDate.length() >= 4) {
+                artist =
+                        (String) artistMap.get("name");
+            }
+            System.out.println(
+                    "SCORE -> "
+                            + title
+                            + " | "
+                            + artist
+            );
+            Integer year = null;
+            String genre = null;
 
-            year =
-                    Integer.parseInt(
+            var tags = (List<Map>) result.get("tags");
+
+            if (tags != null && !tags.isEmpty()) {
+
+                Map firstTag = tags.get(0);
+
+                genre = (String) firstTag.get("name");
+            }
+            String firstReleaseDate =
+                    (String) result.get("first-release-date");
+
+            if (firstReleaseDate != null &&
+                    firstReleaseDate.length() >= 4) {
+
+                try {
+                    year = Integer.parseInt(
                             firstReleaseDate.substring(0, 4)
                     );
+                } catch (NumberFormatException ignored) {
+                }
+            }
+            System.out.println(
+                    "FOUND MB ALBUM -> " +
+                            title +
+                            " | " +
+                            artist +
+                            " | " +
+                            musicBrainzId
+            );
+            System.out.println("RAW RESULT = " + result);
+            albums.add(
+                    new MusicBrainzAlbumDto(
+                            musicBrainzId,
+                            title,
+                            artist,
+                            year,
+                            genre
+                    )
+            );
         }
-
-        return new MusicBrainzAlbumDto(
-                title,
-                artist,
-                year,
-                null
-        );
+        System.out.println("FINAL ALBUMS = " + albums.size());
+        return albums;
     }
 }

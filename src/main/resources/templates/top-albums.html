@@ -58,9 +58,10 @@
          th:each="album : ${topAlbums}">
 
       <img th:src="${album.coverUrl}"
-           alt="Album cover">
+           alt="Album cover"
+           class="album-cover">
 
-      <h2 th:text="${album.title}"></h2>
+      <h3 th:text="${album.title}"></h3>
 
       <br>
 

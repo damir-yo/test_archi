@@ -64,7 +64,8 @@
              th:each="favorite : ${favorites}">
 
             <img th:src="${favorite.album.coverUrl}"
-                 alt="Album cover">
+                 alt="Album cover"
+                 class="album-cover">
 
             <h3 th:text="${favorite.album.title}"></h3>
 

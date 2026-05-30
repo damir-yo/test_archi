@@ -22,46 +22,87 @@ public class GeniusApiService {
 
     public GeniusAlbumDto searchAlbum(String query) {
 
-        Map<String, Object> response =
-                restClient.get()
-                        .uri(uriBuilder ->
-                                uriBuilder
-                                        .path("/search")
-                                        .queryParam("q", query)
-                                        .build()
-                        )
-                        .header(
-                                HttpHeaders.AUTHORIZATION,
-                                "Bearer " + externalApiConfig.getToken()
-                        )
-                        .accept(MediaType.APPLICATION_JSON)
-                        .retrieve()
-                        .body(Map.class);
+        try {
 
-        Map responseMap = (Map) response.get("response");
+            Map<String, Object> response =
+                    restClient.get()
+                            .uri(uriBuilder ->
+                                    uriBuilder
+                                            .path("/search")
+                                            .queryParam("q", query)
+                                            .build()
+                            )
+                            .header(
+                                    HttpHeaders.AUTHORIZATION,
+                                    "Bearer " + externalApiConfig.getToken()
+                            )
+                            .accept(MediaType.APPLICATION_JSON)
+                            .retrieve()
+                            .body(Map.class);
 
-        var hits = (java.util.List<Map>) responseMap.get("hits");
+            if (response == null) {
+                return null;
+            }
 
-        if (hits.isEmpty()) {
+            Map responseMap = (Map) response.get("response");
+
+            if (responseMap == null) {
+                return null;
+            }
+
+            var hits = (java.util.List<Map>) responseMap.get("hits");
+            System.out.println("HITS COUNT = " + hits.size());
+            if (hits == null || hits.isEmpty()) {
+                return null;
+            }
+
+            for (int i = 0; i < Math.min(5, hits.size()); i++) {
+
+                Map hit = hits.get(i);
+
+                Map result = (Map) hit.get("result");
+
+                String title =
+                        (String) result.get("title");
+
+                Map artistMap =
+                        (Map) result.get("primary_artist");
+
+                String artist =
+                        (String) artistMap.get("name");
+
+                System.out.println(
+                        "GENIUS HIT " + i +
+                                " -> " +
+                                title +
+                                " | " +
+                                artist
+                );
+            }
+
+            Map firstHit = hits.get(0);
+
+            Map result = (Map) firstHit.get("result");
+
+            String title = (String) result.get("title");
+
+            String imageUrl = (String) result.get("song_art_image_url");
+
+            Map artistMap = (Map) result.get("primary_artist");
+
+            String artist = (String) artistMap.get("name");
+
+            return new GeniusAlbumDto(
+                    title,
+                    artist,
+                    imageUrl
+            );
+
+        } catch (Exception e) {
+
+            System.out.println("Genius API error: " + e.getMessage());
+
             return null;
         }
-
-        Map firstHit = hits.get(0);
-
-        Map result = (Map) firstHit.get("result");
-
-        String title = (String) result.get("title");
-
-        String imageUrl = (String) result.get("song_art_image_url");
-
-        Map artistMap = (Map) result.get("primary_artist");
-
-        String artist = (String) artistMap.get("name");
-
-        return new GeniusAlbumDto(
-                title,
-                artist,
-                imageUrl
-        );
     }
 }

@@ -25,6 +25,12 @@ public class AlbumService {
                 .orElseThrow(() -> new RuntimeException("Album not found"));
     }
 
+    public Album findByMusicBrainzId(String musicBrainzId) {
+
+        return albumRepository
+                .findByMusicBrainzId(musicBrainzId)
+                .orElse(null);
+    }
     public void createAlbum(AlbumForm form) {
 
         Album album = new Album();
@@ -34,7 +40,7 @@ public class AlbumService {
         album.setGenre(form.getGenre());
         album.setReleaseYear(form.getReleaseYear());
         album.setCoverUrl(form.getCoverUrl());
-        album.setExternalId(form.getExternalId());
+        album.setMusicBrainzId(form.getMusicBrainzId());
 
         albumRepository.save(album);
     }
@@ -48,7 +54,7 @@ public class AlbumService {
         album.setGenre(form.getGenre());
         album.setReleaseYear(form.getReleaseYear());
         album.setCoverUrl(form.getCoverUrl());
-        album.setExternalId(form.getExternalId());
+        album.setMusicBrainzId(form.getMusicBrainzId());
 
         albumRepository.save(album);
     }
@@ -76,5 +82,10 @@ public class AlbumService {
 
         return albumRepository
                 .findByGenreContainingIgnoreCase(genre);
+    }
+
+    public Album save(Album album) {
+
+        return albumRepository.save(album);
     }
 }
