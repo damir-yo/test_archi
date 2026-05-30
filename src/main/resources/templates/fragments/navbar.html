@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="navbar" class="navbar">
+
+  <a th:href="@{/}">
+    PeacHub
+  </a>
+
+  <a th:href="@{/albums}">
+    Albums
+  </a>
+
+  <a th:href="@{/albums/top}">
+    Top
+  </a>
+
+  <a th:href="@{/favorites}">
+    Favorites
+  </a>
+
+  <a th:href="@{/users/me}">
+    Profile
+  </a>
+
+  <form th:action="@{/logout}"
+        method="post"
+        style="display:inline; margin:0;">
+
+    <button type="submit"
+            style="
+                background:none;
+                border:none;
+                color:white;
+                cursor:pointer;
+                font-size:16px;
+                font-family:inherit;
+            ">
+      Logout
+    </button>
+
+  </form>
+
+</div>
+
+</body>
+</html>

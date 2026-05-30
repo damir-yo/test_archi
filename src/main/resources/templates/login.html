@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container">
+
+  <div style="
+            text-align:center;
+            margin-top:40px;
+            margin-bottom:40px;
+    ">
+
+    <h1 style="
+                font-size:56px;
+                margin-bottom:10px;
+        ">
+      Welcome Back
+    </h1>
+
+    <p style="
+                color:#b3b3b3;
+                font-size:18px;
+        ">
+      Sign in to continue sharing your music taste
+    </p>
+
+  </div>
+
+  <div class="card" style="
+            max-width:500px;
+            margin:0 auto;
+            padding:40px;
+    ">
+
+    <div th:if="${param.error}"
+         style="
+                background:#3a1515;
+                color:#ff8a8a;
+                padding:12px;
+                border-radius:12px;
+                margin-bottom:20px;
+        ">
+      Invalid email or password
+    </div>
+
+    <div th:if="${param.logout}"
+         style="
+                background:#14331d;
+                color:#7cff9d;
+                padding:12px;
+                border-radius:12px;
+                margin-bottom:20px;
+        ">
+      Successfully logged out
+    </div>
+
+    <form th:action="@{/login}" method="post">
+
+      <div style="margin-bottom:20px;">
+
+        <label style="
+                        display:block;
+                        margin-bottom:10px;
+                        font-weight:bold;
+                ">
+          Email
+        </label>
+
+        <input type="email"
+               name="email"
+               placeholder="Enter your email"
+               required
+               style="
+            width:100%;
+            padding:15px;
+            border:none;
+            border-radius:14px;
+            background:#1e1e1e;
+            color:white;
+            font-size:16px;
+       ">
+
+      </div>
+
+      <div style="margin-bottom:30px;">
+
+        <label style="
+                        display:block;
+                        margin-bottom:10px;
+                        font-weight:bold;
+                ">
+          Password
+        </label>
+
+        <input type="password"
+               name="password"
+               placeholder="Enter your password"
+               required
+               style="
+                            width:100%;
+                            padding:15px;
+                            border:none;
+                            border-radius:14px;
+                            background:#1e1e1e;
+                            color:white;
+                            font-size:16px;
+                       ">
+
+      </div>
+
+      <button type="submit"
+              style="
+                        width:100%;
+                        padding:16px;
+                        border:none;
+                        border-radius:14px;
+                        font-size:16px;
+                        font-weight:bold;
+                        cursor:pointer;
+                    ">
+        Login
+      </button>
+
+    </form>
+
+    <div style="
+                text-align:center;
+                margin-top:25px;
+                color:#b3b3b3;
+        ">
+
+      Don't have an account?
+
+      <a th:href="@{/register}">
+        Register
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

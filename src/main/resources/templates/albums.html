@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+  <title>Albums</title>
+
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container">
+
+  <div class="hero">
+
+    <h1>Albums</h1>
+
+    <p>
+      Discover music, reviews and ratings
+    </p>
+
+    <form th:action="@{/albums/search}"
+          method="get"
+          class="search-bar">
+
+      <input type="text"
+             name="query"
+             placeholder="Search albums, artists or genres...">
+
+      <button type="submit">
+        Search
+      </button>
+
+    </form>
+
+  </div>
+
+  <div class="center"
+       th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+
+    <a th:href="@{/albums/new}">
+      <button>
+        Create album
+      </button>
+    </a>
+
+  </div>
+
+  <br>
+
+  <div class="album-grid">
+
+    <div class="card"
+         th:each="album : ${albums}">
+
+      <img th:src="${album.coverUrl}"
+           alt="Album cover"
+           class="album-cover">
+
+      <br><br>
+
+      <h3 th:text="${album.title}"></h3>
+
+      <p class="album-meta">
+
+        <span th:text="${album.artist}"></span>
+
+        <span>•</span>
+
+        <span th:text="${album.genre}"></span>
+
+      </p>
+
+      <a th:href="@{/albums/{id}(id=${album.id})}">
+        Open album
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
