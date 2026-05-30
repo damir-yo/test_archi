@@ -3,6 +3,8 @@ package com.peachub.app.controller;
 import com.peachub.app.entity.User;
 import com.peachub.app.service.FavoriteAlbumService;
 import com.peachub.app.service.UserService;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,18 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/favorites")
+@AllArgsConstructor
 public class FavoriteAlbumController {
-
-    private final FavoriteAlbumService favoriteAlbumService;
-    private final UserService userService;
-
-    public FavoriteAlbumController(
-            FavoriteAlbumService favoriteAlbumService,
-            UserService userService
-    ) {
-        this.favoriteAlbumService = favoriteAlbumService;
-        this.userService = userService;
-    }
+    @Autowired
+    private FavoriteAlbumService favoriteAlbumService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public String favoritesPage(

@@ -1,21 +1,18 @@
 package com.peachub.app.controller;
 
 import com.peachub.app.service.ReviewLikeService;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/albums/{albumId}/reviews/{reviewId}/likes")
+@AllArgsConstructor
 public class ReviewLikeController {
-
-    private final ReviewLikeService reviewLikeService;
-
-    public ReviewLikeController(
-            ReviewLikeService reviewLikeService
-    ) {
-        this.reviewLikeService = reviewLikeService;
-    }
+    @Autowired
+    private ReviewLikeService reviewLikeService;
 
     @PostMapping
     public String likeReview(

@@ -2,6 +2,8 @@ package com.peachub.app.controller;
 
 import com.peachub.app.entity.Comment;
 import com.peachub.app.service.CommentService;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,13 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/albums/{albumId}/reviews/{reviewId}/comments")
+@AllArgsConstructor
 public class CommentController {
-
-    private final CommentService commentService;
-
-    public CommentController(CommentService commentService) {
-        this.commentService = commentService;
-    }
+    @Autowired
+    private CommentService commentService;
 
     @GetMapping("/new")
     public String createCommentPage(

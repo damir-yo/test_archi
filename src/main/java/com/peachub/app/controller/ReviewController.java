@@ -5,6 +5,8 @@ import com.peachub.app.entity.Comment;
 import com.peachub.app.entity.Review;
 import com.peachub.app.service.AlbumService;
 import com.peachub.app.service.ReviewService;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,18 +14,12 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/albums/{albumId}/reviews")
+@AllArgsConstructor
 public class ReviewController {
-
-    private final AlbumService albumService;
-    private final ReviewService reviewService;
-
-    public ReviewController(
-            ReviewService reviewService,
-            AlbumService albumService
-    ) {
-        this.reviewService = reviewService;
-        this.albumService = albumService;
-    }
+    @Autowired
+    private AlbumService albumService;
+    @Autowired
+    private ReviewService reviewService;
 
     @GetMapping
     public String reviewsPage(

@@ -6,6 +6,8 @@ import com.peachub.app.service.AlbumService;
 import com.peachub.app.service.FavoriteAlbumService;
 import com.peachub.app.service.ReviewService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,21 +16,14 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/albums")
+@AllArgsConstructor
 public class AlbumController {
-
-    private final ReviewService reviewService;
-    private final AlbumService albumService;
-    private final FavoriteAlbumService favoriteAlbumService;
-
-    public AlbumController(
-            AlbumService albumService,
-            ReviewService reviewService,
-            FavoriteAlbumService favoriteAlbumService
-    ) {
-        this.albumService = albumService;
-        this.reviewService = reviewService;
-        this.favoriteAlbumService = favoriteAlbumService;
-    }
+    @Autowired
+    private ReviewService reviewService;
+    @Autowired
+    private AlbumService albumService;
+    @Autowired
+    private FavoriteAlbumService favoriteAlbumService;
 
     @GetMapping("/{id}")
     public String albumPage(

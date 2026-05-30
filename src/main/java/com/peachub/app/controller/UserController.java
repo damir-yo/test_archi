@@ -4,6 +4,8 @@ import com.peachub.app.entity.User;
 import com.peachub.app.service.FavoriteAlbumService;
 import com.peachub.app.service.ReviewService;
 import com.peachub.app.service.UserService;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,21 +13,14 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/users")
+@AllArgsConstructor
 public class UserController {
-
-    private final UserService userService;
-    private final ReviewService reviewService;
-    private final FavoriteAlbumService favoriteAlbumService;
-
-    public UserController(
-            UserService userService,
-            ReviewService reviewService,
-            FavoriteAlbumService favoriteAlbumService
-    ) {
-        this.userService = userService;
-        this.reviewService = reviewService;
-        this.favoriteAlbumService = favoriteAlbumService;
-    }
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ReviewService reviewService;
+    @Autowired
+    private FavoriteAlbumService favoriteAlbumService;
 
     @GetMapping("/me")
     public String myProfile(
