@@ -37,7 +37,7 @@ public class MusicBrainzService {
                             )
                             .header(
                                     HttpHeaders.USER_AGENT,
-                                    "PeachHub/1.0 (student project)"
+                                    "PeacHub/1.0 (student project)"
                             )
                             .retrieve()
                             .body(Map.class);
