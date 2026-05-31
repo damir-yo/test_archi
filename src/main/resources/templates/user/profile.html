@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Профиль</title>
+    <link rel="icon" type="image/png" th:href="@{/images/peach.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+  </head>
+  <body>
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="container">
+
+      <div class="profile-header">
+
+        <h1 class="profile-page-title">
+          Профиль пользователя
+        </h1>
+
+        <p class="profile-page-subtitle">
+          Музыкальная активность и избранные альбомы
+        </p>
+
+      </div>
+
+      <div class="card profile-user-card">
+
+        <h2 class="profile-username"
+            th:text="${profileUser.username}">
+        </h2>
+
+        <p class="profile-user-role">
+          Пользователь PeachHub
+        </p>
+
+      </div>
+
+      <h2 class="profile-section-title">
+        Отзывы пользователя
+      </h2>
+
+      <div th:if="${#lists.isEmpty(reviews)}">
+
+        <div class="card profile-empty-reviews">
+
+          <p>Пока нет отзывов</p>
+
+        </div>
+
+      </div>
+
+      <div class="album-grid">
+
+        <div class="card-review profile-review-card"
+             th:each="review : ${reviews}">
+
+          <h3 class="profile-review-title">
+
+            <a th:href="@{/albums/{albumId}/reviews/{reviewId}(
+                            albumId=${review.album.id},
+                            reviewId=${review.id}
+                        )}"
+               th:text="${review.title != null and !#strings.isEmpty(review.title) ? review.title : 'Без названия'}">
+
+              Заголовок отзыва
+
+            </a>
+
+          </h3>
+
+          <br>
+
+          <p>
+            ⭐ Оценка:
+            <span th:text="${review.rating}"></span>
+          </p>
+
+          <br>
+
+          <a th:href="@{/albums/{albumId}/reviews/{reviewId}(
+                        albumId=${review.album.id},
+                        reviewId=${review.id}
+                    )}">
+            Открыть отзыв →
+          </a>
+
+        </div>
+
+      </div>
+
+      <br><br>
+
+      <h2 class="profile-section-title">
+        Избранные альбомы
+      </h2>
+
+      <div th:if="${#lists.isEmpty(favorites)}">
+
+        <div class="card profile-empty-favorites">
+
+          <p>Нет избранных альбомов</p>
+
+        </div>
+
+      </div>
+
+      <div class="album-grid">
+
+        <div class="album-card"
+             th:each="favorite : ${favorites}">
+
+          <img th:src="${favorite.album.coverUrl}"
+               alt="Обложка альбома"
+               class="album-cover">
+
+          <h3 th:text="${favorite.album.title}"></h3>
+
+          <p class="profile-album-meta">
+
+            <span th:text="${favorite.album.artist}"></span>
+
+            •
+
+            <span th:text="${favorite.album.genre}"></span>
+
+            •
+
+            <span th:text="${favorite.album.releaseYear}"></span>
+
+          </p>
+
+          <br>
+
+          <a th:href="@{/albums/{id}(id=${favorite.album.id})}">
+            Открыть альбом →
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>

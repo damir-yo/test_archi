@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Создание отзыва</title>
+    <link rel="icon" type="image/png" th:href="@{/images/peach.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+  </head>
+  <body>
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="container">
+
+      <div class="review-header">
+
+        <h1 class="review-title">
+          Написать отзыв на альбом
+        </h1>
+
+        <p class="review-subtitle">
+          Поделитесь своим мнением с сообществом
+        </p>
+
+      </div>
+
+      <div class="card review-form-card">
+
+        <div class="review-album-info">
+
+          <img th:src="${review.album.coverUrl}"
+               alt="Обложка альбома"
+               class="review-album-cover">
+
+          <div>
+
+            <h2 th:text="${review.album.title}"
+                class="review-album-title">
+            </h2>
+
+            <p class="review-album-description">
+              Расскажите сообществу, что вы думаете об этом альбоме
+            </p>
+
+          </div>
+
+        </div>
+
+        <form th:action="@{/albums/{albumId}/reviews(albumId=${review.album.id})}"
+              method="post"
+              th:object="${review}">
+
+          <div class="form-group">
+
+            <label class="form-label">
+              Заголовок отзыва
+            </label>
+
+            <input type="text"
+                   th:field="*{title}"
+                   placeholder="Введите заголовок отзыва"
+                   required
+                   class="auth-input">
+
+          </div>
+
+          <div class="form-group">
+
+            <label class="form-label">
+              Ваш отзыв
+            </label>
+
+            <textarea th:field="*{content}"
+                      placeholder="Напишите свои мысли об альбоме..."
+                      required
+                      class="review-textarea">
+                    </textarea>
+
+          </div>
+
+          <div class="form-group-password">
+
+            <label class="form-label">
+              Оценка
+            </label>
+
+            <select th:field="*{rating}"
+                    required
+                    class="rating-select">
+
+              <option value="">
+                Выберите оценку
+              </option>
+
+              <option value="1">1 ⭐</option>
+              <option value="2">2 ⭐</option>
+              <option value="3">3 ⭐</option>
+              <option value="4">4 ⭐</option>
+              <option value="5">5 ⭐</option>
+              <option value="6">6 ⭐</option>
+              <option value="7">7 ⭐</option>
+              <option value="8">8 ⭐</option>
+              <option value="9">9 ⭐</option>
+              <option value="10">10 ⭐</option>
+
+            </select>
+
+          </div>
+
+          <input type="hidden" th:field="*{album.id}">
+
+          <button type="submit"
+                  class="auth-button">
+
+            Опубликовать отзыв
+
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>

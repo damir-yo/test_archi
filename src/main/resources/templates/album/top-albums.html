@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Топ альбомов</title>
+    <link rel="icon" type="image/png" th:href="@{/images/peach.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+  </head>
+  <body>
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="container">
+
+      <div class="top-header">
+
+        <h1 class="top-title">
+          Топ альбомов
+        </h1>
+
+        <p class="top-subtitle">
+          Самые высоко оценённые альбомы сообщества
+        </p>
+
+      </div>
+
+      <form th:action="@{/albums/top}" method="get">
+
+        <div class="filter-container">
+
+          <label class="filter-label">
+            Минимальная оценка
+          </label>
+
+          <select name="minRating"
+                  class="rating-select">
+
+            <option value="">
+              Все оценки
+            </option>
+
+            <option value="1" th:selected="${minRating == 1}">1 ⭐+</option>
+            <option value="2" th:selected="${minRating == 2}">2 ⭐+</option>
+            <option value="3" th:selected="${minRating == 3}">3 ⭐+</option>
+            <option value="4" th:selected="${minRating == 4}">4 ⭐+</option>
+            <option value="5" th:selected="${minRating == 5}">5 ⭐+</option>
+            <option value="6" th:selected="${minRating == 6}">6 ⭐+</option>
+            <option value="7" th:selected="${minRating == 7}">7 ⭐+</option>
+            <option value="8" th:selected="${minRating == 8}">8 ⭐+</option>
+            <option value="9" th:selected="${minRating == 9}">9 ⭐+</option>
+            <option value="10" th:selected="${minRating == 10}">10 ⭐</option>
+
+          </select>
+
+        </div>
+
+        <button type="submit">
+          Применить фильтр
+        </button>
+
+      </form>
+
+      <br>
+
+      <div th:if="${#lists.isEmpty(topAlbums)}">
+
+        <div class="card empty-top-card">
+
+          <h2>Пока нет лучших альбомов</h2>
+
+          <p class="empty-top-text">
+            Альбомы появятся здесь после создания отзывов.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="album-grid">
+
+        <div class="album-card"
+             th:each="album : ${topAlbums}">
+
+          <img th:src="${album.coverUrl}"
+               alt="Обложка альбома"
+               class="album-cover">
+
+          <h3 th:text="${album.title}"></h3>
+
+          <br>
+
+          <p>
+            ⭐ Оценка:
+            <span th:text="${#numbers.formatDecimal(album.averageRating, 1, 1)}"></span>
+          </p>
+
+          <p>
+            📝 Отзывы:
+            <span th:text="${album.reviewsCount}"></span>
+          </p>
+
+          <br>
+
+          <a th:href="@{/albums/{id}(id=${album.albumId})}">
+            Открыть альбом →
+          </a>
+
+        </div>
+
+      </div>
+
+      <br><br>
+
+      <div class="back-link-container">
+
+        <a th:href="@{/albums}">
+          Назад к альбомам
+        </a>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>

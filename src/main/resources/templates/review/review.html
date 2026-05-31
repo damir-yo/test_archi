@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <title th:text="${review.title}">Отзыв</title>
+    <link rel="icon" type="image/png" th:href="@{/images/peach.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+  </head>
+  <body>
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="container">
+
+      <div class="card review-details-card">
+
+        <div class="review-details-layout">
+
+          <img th:src="${review.album.coverUrl}"
+               alt="Обложка альбома"
+               class="review-details-cover">
+
+          <div class="review-details-content">
+
+            <h1 th:text="${review.title}"
+                class="review-details-title">
+            </h1>
+
+            <h2 th:text="${review.album.title}"
+                class="review-details-album-title">
+            </h2>
+
+            <p class="review-details-meta">
+
+              <span th:text="${review.album.artist}"></span>
+
+              •
+
+              <span th:text="${review.album.genre}"></span>
+
+              •
+
+              <span th:text="${review.album.releaseYear}"></span>
+
+            </p>
+
+            <div class="review-details-info">
+
+                        <span class="review-rating-badge">
+                            ⭐ <span th:text="${review.rating}"></span>/10
+                        </span>
+
+              <span class="review-author">
+
+                            Автор:
+
+                            <a th:href="@{/users/{id}(id=${review.user.id})}"
+                               th:text="${review.user.username}">
+                            </a>
+
+                        </span>
+
+            </div>
+
+            <div class="review-content-box">
+
+              <p th:text="${review.content}"
+                 class="review-content-text">
+              </p>
+
+            </div>
+
+            <div class="review-likes">
+
+              <button id="like-button"
+                      type="button"
+                      th:data-album-id="${review.album.id}"
+                      th:data-review-id="${review.id}"
+                      th:data-liked="${isLiked}">
+
+                <span th:text="${isLiked ? '✓ Понравилось' : '❤️ Нравится'}"></span>
+
+              </button>
+
+              <span id="likes-number"
+                    th:text="${review.likes.size()}">
+                        </span>
+
+            </div>
+
+            <div th:if="${isOwner}"
+                 class="review-owner-actions">
+
+              <a th:href="@{/albums/{albumId}/reviews/{reviewId}/edit(
+                            albumId=${review.album.id},
+                            reviewId=${review.id}
+                        )}"
+                 class="edit-review-link">
+
+                ✏️ Редактировать отзыв
+
+              </a>
+
+              <form th:action="@{/albums/{albumId}/reviews/{reviewId}/delete(
+                                albumId=${review.album.id},
+                                reviewId=${review.id}
+                        )}"
+                    method="post">
+
+                <button type="submit"
+                        class="danger-button review-delete-button">
+
+                  🗑 Удалить отзыв
+
+                </button>
+
+              </form>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <h2 class="comments-title">
+        💬 Комментарии
+      </h2>
+
+      <div class="card comments-form-card">
+
+        <form method="post"
+              th:action="@{/albums/{albumId}/reviews/{reviewId}/comments(
+                        albumId=${review.album.id},
+                        reviewId=${review.id}
+                  )}"
+              th:object="${comment}">
+
+                <textarea th:field="*{content}"
+                          placeholder="Напишите комментарий..."
+                          class="comment-textarea">
+                </textarea>
+
+          <button type="submit">
+            Добавить комментарий
+          </button>
+
+        </form>
+
+      </div>
+
+      <div th:if="${#lists.isEmpty(review.comments)}">
+
+        <div class="card">
+
+          <p>Комментариев пока нет</p>
+
+        </div>
+
+      </div>
+
+      <div th:each="comment : ${review.comments}">
+
+        <div class="card comment-card">
+
+          <p th:text="${comment.content}"
+             class="comment-content">
+          </p>
+
+          <small class="comment-author">
+
+            Автор:
+
+            <a th:href="@{/users/{id}(id=${comment.user.id})}"
+               th:text="${comment.user.username}">
+            </a>
+
+          </small>
+
+          <div th:if="${#authentication != null and #authentication.name == comment.user.email}"
+               class="comment-actions">
+
+            <form th:action="@{/albums/{albumId}/reviews/{reviewId}/comments/{commentId}/edit(
+                        albumId=${review.album.id},
+                        reviewId=${review.id},
+                        commentId=${comment.id}
+                    )}"
+                  method="post">
+
+                        <textarea name="content"
+                                  class="comment-edit-textarea"
+                                  th:text="${comment.content}">
+                        </textarea>
+
+              <button type="submit">
+                💾 Сохранить
+              </button>
+
+            </form>
+
+            <form th:action="@{/albums/{albumId}/reviews/{reviewId}/comments/{commentId}/delete(
+                        albumId=${review.album.id},
+                        reviewId=${review.id},
+                        commentId=${comment.id}
+                    )}"
+                  method="post"
+                  class="comment-delete-form">
+
+              <button type="submit"
+                      class="danger-button">
+
+                🗑 Удалить
+
+              </button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <br><br>
+
+      <div class="back-to-album">
+
+        <a th:href="@{/albums/{id}(id=${review.album.id})}">
+          ← Назад к альбому
+        </a>
+
+      </div>
+
+    </div>
+
+  <script th:src="@{/js/reviewLike.js}"></script>
+  </body>
+</html>

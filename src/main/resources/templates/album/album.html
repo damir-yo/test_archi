@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Альбом</title>
+
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="icon" type="image/png" th:href="@{/images/peach.png}">
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
+</head>
+<body>
+
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+  <div class="container">
+
+    <div class="card">
+
+      <div class="album-header">
+
+        <div class="album-cover-wrapper">
+
+          <img th:if="${album.coverUrl != null}"
+               th:src="${album.coverUrl}"
+               alt="Обложка альбома"
+               class="album-cover-large">
+
+          <div th:unless="${album.coverUrl != null}"
+               class="album-cover-placeholder">
+            Нет обложки
+          </div>
+
+        </div>
+
+        <div class="album-info">
+
+          <h1 class="album-title"
+              th:text="${album.title}">
+          </h1>
+
+          <p class="album-meta">
+
+            <span th:text="${album.artist}"></span>
+
+            •
+
+            <span th:text="${album.genre}"></span>
+
+            •
+
+            <span th:text="${album.releaseYear}"></span>
+
+          </p>
+
+          <div class="album-actions">
+
+            <a th:href="@{/albums/{id}/reviews/new(id=${album.id})}">
+              <button>
+                Написать отзыв
+              </button>
+            </a>
+
+            <button
+                    id="favorite-button"
+                    type="button"
+                    th:data-album-id="${album.id}"
+                    th:data-favorite="${isFavorite}">
+
+          <span th:text="${isFavorite ? '★ В избранном' : '☆ Добавить в избранное'}">
+          </span>
+
+            </button>
+
+          </div>
+
+          <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+               class="admin-actions">
+
+            <a th:href="@{/albums/{id}/edit(id=${album.id})}">
+              Редактировать альбом
+            </a>
+
+            <br><br>
+
+            <form th:action="@{/albums/{id}/delete(id=${album.id})}"
+                  method="post">
+
+              <button type="submit"
+                      class="danger-button">
+
+                Удалить альбом
+
+              </button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <h2 class="reviews-title">
+      Отзывы
+    </h2>
+
+    <div th:if="${#lists.isEmpty(reviews)}">
+
+      <div class="card">
+
+        <p>
+          Пока нет отзывов
+        </p>
+
+      </div>
+
+    </div>
+
+    <div th:each="review : ${reviews}">
+
+      <div class="review-card">
+
+        <h3>
+
+          <a th:href="@{/albums/{albumId}/reviews/{reviewId}(
+                      albumId=${album.id},
+                      reviewId=${review.id}
+                  )}"
+             th:text="${review.title != null and !#strings.isEmpty(review.title) ? review.title : 'Отзыв без названия'}">
+
+            Название отзыва
+
+          </a>
+
+        </h3>
+
+        <p th:text="${#strings.abbreviate(review.content, 250)}"></p>
+
+        <small>
+
+          <span th:text="${review.user.username}"></span>
+
+          •
+
+          <span th:text="${review.rating}"></span>/10
+
+        </small>
+
+        <br><br>
+
+        <div th:if="${#authentication.name == review.user.username}">
+
+          <a th:href="@{/albums/{albumId}/reviews/{reviewId}/edit(
+                      albumId=${album.id},
+                      reviewId=${review.id}
+                  )}">
+            Редактировать
+          </a>
+
+          <br><br>
+
+          <form th:action="@{/albums/{albumId}/reviews/{reviewId}/delete(
+                      albumId=${album.id},
+                      reviewId=${review.id}
+                  )}"
+                method="post">
+
+            <button type="submit"
+                    class="danger-button">
+
+              Удалить
+
+            </button>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script th:src="@{/js/favorite.js}"></script>
+</body>
+</html>

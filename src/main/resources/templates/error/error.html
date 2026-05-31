@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Ошибка</title>
+    <link rel="icon" type="image/png" th:href="@{/images/peach.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+  </head>
+  <body>
+
+    <div class="container">
+
+      <div class="card">
+
+        <h1>Что-то пошло не так</h1>
+
+        <p th:text="${error}">
+          Сообщение об ошибке
+        </p>
+
+        <br>
+
+        <a th:href="@{/albums}">
+          Вернуться на главную
+        </a>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>

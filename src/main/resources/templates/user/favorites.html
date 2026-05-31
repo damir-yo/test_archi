@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Избранное</title>
+        <link rel="icon" type="image/png" th:href="@{/images/peach.png}">
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+    </head>
+    <body>
+
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+        <div class="container">
+
+            <div class="favorites-header">
+
+                <h1 class="favorites-title">
+                    Избранные альбомы
+                </h1>
+
+                <p class="favorites-subtitle">
+                    Ваша сохранённая музыкальная коллекция
+                </p>
+
+            </div>
+
+            <div th:if="${#lists.isEmpty(favorites)}">
+
+                <div class="card favorites-empty-card">
+
+                    <h2>Пока нет избранных альбомов</h2>
+
+                    <p class="favorites-empty-text">
+                        Начните добавлять альбомы, чтобы собрать свою коллекцию.
+                    </p>
+
+                    <br>
+
+                    <a th:href="@{/albums}">
+                        Перейти к альбомам →
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="album-grid">
+
+                <div class="album-card"
+                     th:each="favorite : ${favorites}">
+
+                    <img th:src="${favorite.album.coverUrl}"
+                         alt="Обложка альбома"
+                         class="album-cover">
+
+                    <h3 th:text="${favorite.album.title}"></h3>
+
+                    <p>
+
+                        <span th:text="${favorite.album.artist}"></span>
+
+                        •
+
+                        <span th:text="${favorite.album.genre}"></span>
+
+                    </p>
+
+                    <br>
+
+                    <a th:href="@{/albums/{id}(id=${favorite.album.id})}">
+                        Открыть альбом
+                    </a>
+
+                    <br><br>
+
+                    <form th:action="@{/favorites/{albumId}/delete(albumId=${favorite.album.id})}"
+                          method="post">
+
+                        <input type="hidden"
+                               name="source"
+                               value="favorites">
+
+                        <button type="submit">
+                            Удалить
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </body>
+</html>

@@ -13,7 +13,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Review {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

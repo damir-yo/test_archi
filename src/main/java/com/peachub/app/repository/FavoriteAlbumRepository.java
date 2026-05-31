@@ -9,15 +9,9 @@ import java.util.Optional;
 public interface FavoriteAlbumRepository
         extends JpaRepository<FavoriteAlbum, Long> {
 
-    Optional<FavoriteAlbum> findByUserIdAndAlbumId(
-            Long userId,
-            Long albumId
-    );
+    Optional<FavoriteAlbum> findByUserIdAndAlbumId(Long userId, Long albumId);
 
     List<FavoriteAlbum> findByUserId(Long userId);
 
-    boolean existsByUserIdAndAlbumId(
-            Long userId,
-            Long albumId
-    );
+    boolean existsByUserIdAndAlbumId(Long userId, Long albumId);
 }

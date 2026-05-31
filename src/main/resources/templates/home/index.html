@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>PeachHub</title>
+    <link rel="icon" type="image/png" th:href="@{/images/peach.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+  </head>
+  <body>
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="container">
+
+      <div class="hero-section">
+
+        <p class="hero-badge">
+          МУЗЫКАЛЬНАЯ ПЛАТФОРМА СООБЩЕСТВА
+        </p>
+
+        <div class="hero-logo">
+
+          <img th:src="@{/images/peach.png}"
+               alt="Peach logo">
+
+          <h1 class="hero-title">
+            PeachHub
+          </h1>
+
+        </div>
+
+        <p class="hero-description">
+          Открывайте новые альбомы, пишите отзывы,
+          оценивайте музыку и формируйте свой вкус.
+        </p>
+
+        <br><br>
+
+        <form th:action="@{/albums/search}"
+              method="get"
+              class="search-bar hero-search">
+
+          <input type="text"
+                 name="query"
+                 placeholder="Поиск альбомов, исполнителей или жанров...">
+
+          <button type="submit">
+            Поиск
+          </button>
+
+        </form>
+
+      </div>
+
+      <div class="home-grid">
+
+        <div class="album-card home-card">
+
+          <h2>
+            Альбомы
+          </h2>
+
+          <p>
+            Исследуйте музыкальный каталог
+          </p>
+
+          <br>
+
+          <a th:href="@{/albums}">
+            Открыть →
+          </a>
+
+        </div>
+
+        <div class="album-card home-card">
+
+          <h2>
+            Лучшие оценки
+          </h2>
+
+          <p>
+            Альбомы с самыми высокими оценками сообщества
+          </p>
+
+          <br>
+
+          <a th:href="@{/albums/top}">
+            Открыть →
+          </a>
+
+        </div>
+
+        <div class="album-card home-card">
+
+          <h2>
+            Избранное
+          </h2>
+
+          <p>
+            Ваша личная коллекция
+          </p>
+
+          <br>
+
+          <a th:href="@{/favorites}">
+            Открыть →
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>

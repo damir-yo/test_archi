@@ -13,7 +13,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http
                 .authorizeHttpRequests(auth -> auth
 
@@ -21,7 +20,8 @@ public class SecurityConfig {
                                 "/",
                                 "/register",
                                 "/login",
-                                "/css/**"
+                                "/css/**",
+                                "/images/**"
                         ).permitAll()
 
                         .requestMatchers(
@@ -50,7 +50,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .usernameParameter("email")
-                        .defaultSuccessUrl("/", true)
+                        .defaultSuccessUrl("/")
                         .permitAll()
                 )
 
@@ -63,7 +63,6 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-
         return new BCryptPasswordEncoder();
     }
 }

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="icon" type="image/png" th:href="@{/images/peach.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+  </head>
+  <body>
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="container">
+
+      <div class="register-header">
+
+        <h1 class="register-title">
+          Добро пожаловать в PeachHub
+        </h1>
+
+        <p class="register-subtitle">
+          Создайте аккаунт и начните делиться любимыми альбомами
+        </p>
+
+      </div>
+
+      <div class="card register-card">
+
+        <form th:action="@{/register}"
+              th:object="${user}"
+              method="post">
+
+          <div class="form-group">
+
+            <label class="form-label">
+              Имя пользователя
+            </label>
+
+            <input type="text"
+                   th:field="*{username}"
+                   placeholder="Введите имя пользователя"
+                   required
+                   class="auth-input">
+
+          </div>
+
+          <div class="form-group">
+
+            <label class="form-label">
+              Email
+            </label>
+
+            <input type="email"
+                   th:field="*{email}"
+                   placeholder="Введите email"
+                   required
+                   class="auth-input">
+
+          </div>
+
+          <div class="form-group-password">
+
+            <label class="form-label">
+              Пароль
+            </label>
+
+            <input type="password"
+                   th:field="*{password}"
+                   placeholder="Введите пароль"
+                   required
+                   class="auth-input">
+
+          </div>
+
+          <button type="submit"
+                  class="auth-button">
+
+            Создать аккаунт
+
+          </button>
+
+        </form>
+
+        <div class="auth-footer">
+
+          Уже есть аккаунт?
+
+          <a th:href="@{/login}">
+            Войти
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>

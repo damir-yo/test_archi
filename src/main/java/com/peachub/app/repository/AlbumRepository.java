@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface AlbumRepository extends JpaRepository<Album, Long> {
+public interface AlbumRepository extends JpaRepository<Album, Long>, AlbumCriteriaRepository {
     Optional<Album> findByMusicBrainzId(String musicBrainzId);
     List<Album> findByTitleContainingIgnoreCase(String title);
     List<Album> findByArtistContainingIgnoreCase(String artist);
@@ -21,4 +21,15 @@ public interface AlbumRepository extends JpaRepository<Album, Long> {
     OR LOWER(a.genre) LIKE LOWER(CONCAT('%', :query, '%'))
     """)
     List<Album> searchAlbums(String query);
+
+    @Query("""
+    SELECT a
+    FROM Album a
+    WHERE (
+        SELECT AVG(r.rating)
+        FROM Review r
+        WHERE r.album = a
+    ) > :rating
+    """)
+    List<Album> findAlbumsWithRatingAbove(Double rating);
 }

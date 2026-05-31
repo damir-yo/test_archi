@@ -1,0 +1,17 @@
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: peachub-postgres
+    environment:
+      POSTGRES_DB: peachub
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7
+    container_name: peachub-redis
+    ports:
+      - "6379:6379"

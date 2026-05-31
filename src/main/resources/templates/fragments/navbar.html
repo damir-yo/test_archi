@@ -1,49 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <div th:fragment="navbar"
+         class="navbar">
 
-<body>
+      <a th:href="@{/}">
+        PeachHub
+      </a>
 
-<div th:fragment="navbar" class="navbar">
+      <a th:href="@{/albums}">
+        Альбомы
+      </a>
 
-  <a th:href="@{/}">
-    PeacHub
-  </a>
+      <a th:href="@{/albums/top}">
+        Топ
+      </a>
 
-  <a th:href="@{/albums}">
-    Albums
-  </a>
+      <a th:href="@{/favorites}">
+        Избранное
+      </a>
 
-  <a th:href="@{/albums/top}">
-    Top
-  </a>
+      <a th:href="@{/users/me}">
+        Профиль
+      </a>
 
-  <a th:href="@{/favorites}">
-    Favorites
-  </a>
+      <form th:action="@{/logout}"
+            method="post"
+            class="logout-form">
 
-  <a th:href="@{/users/me}">
-    Profile
-  </a>
+        <button type="submit"
+                class="logout-button">
 
-  <form th:action="@{/logout}"
-        method="post"
-        style="display:inline; margin:0;">
+          Выйти
 
-    <button type="submit"
-            style="
-                background:none;
-                border:none;
-                color:white;
-                cursor:pointer;
-                font-size:16px;
-                font-family:inherit;
-            ">
-      Logout
-    </button>
+        </button>
 
-  </form>
+      </form>
 
-</div>
-
-</body>
+    </div>
+  </body>
 </html>

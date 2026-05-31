@@ -1,5 +1,3 @@
-/* ===================== RESET ===================== */
-
 * {
     margin: 0;
     padding: 0;
@@ -23,8 +21,6 @@ a:hover {
     color: #ffb38a;
 }
 
-/* ===================== LAYOUT ===================== */
-
 .container {
     width: 100%;
     max-width: 1200px;
@@ -35,8 +31,6 @@ a:hover {
 .center {
     text-align: center;
 }
-
-/* ===================== NAVBAR ===================== */
 
 .navbar {
     background-color: #1b1b1b;
@@ -56,8 +50,6 @@ a:hover {
 .navbar a:hover {
     color: #ff9f6b;
 }
-
-/* ===================== TYPOGRAPHY ===================== */
 
 h1 {
     font-size: 42px;
@@ -82,8 +74,6 @@ small {
     color: #aaaaaa;
 }
 
-/* ===================== HERO ===================== */
-
 .hero {
     text-align: center;
     margin-bottom: 50px;
@@ -93,8 +83,6 @@ small {
     color: #bbbbbb;
     font-size: 18px;
 }
-
-/* ===================== SEARCH ===================== */
 
 .search-bar {
     display: flex;
@@ -110,7 +98,6 @@ small {
     min-width: 120px;
 }
 
-/* ===================== INPUTS ===================== */
 
 input,
 textarea,
@@ -140,8 +127,6 @@ form {
     margin-bottom: 0;
 }
 
-/* ===================== BUTTONS ===================== */
-
 button {
     background-color: #ff9f6b;
     color: #121212;
@@ -170,8 +155,6 @@ button:hover {
     background-color: #ff7b7b;
 }
 
-/* ===================== COMMON CARD ===================== */
-
 .card {
     background-color: #1e1e1e;
     border: 1px solid #2d2d2d;
@@ -194,15 +177,11 @@ button:hover {
     box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
 
-/* ===================== ALBUM GRID ===================== */
-
 .album-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 24px;
 }
-
-/* ЕДИНАЯ КАРТОЧКА ДЛЯ ВСЕХ СТРАНИЦ */
 
 .album-card {
     background-color: #1e1e1e;
@@ -279,8 +258,6 @@ button:hover {
     justify-content: center;
 }
 
-/* ===================== ALBUM PAGE ===================== */
-
 .album-header {
     display: flex;
     gap: 40px;
@@ -334,8 +311,6 @@ button:hover {
     margin-top: 30px;
 }
 
-/* ===================== REVIEWS ===================== */
-
 .review-card {
     background-color: #181818;
     border: 1px solid #2b2b2b;
@@ -360,9 +335,570 @@ button:hover {
     text-decoration: none;
 }
 
-/* ===================== IMAGES ===================== */
-
 img {
     max-width: 100%;
     border-radius: 12px;
+}
+
+.admin-actions {
+    margin-top: 30px;
+}
+
+.reviews-title {
+    margin-top: 40px;
+}
+
+.top-header {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.top-title {
+    font-size: 56px;
+    margin-bottom: 10px;
+}
+
+.top-subtitle {
+    color: #b3b3b3;
+    font-size: 18px;
+}
+
+.filter-container {
+    margin-bottom: 30px;
+}
+
+.filter-label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.rating-select {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    background: #1e1e1e;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+}
+
+.empty-top-card {
+    text-align: center;
+    padding: 60px;
+}
+
+.empty-top-text {
+    color: #b3b3b3;
+}
+
+.back-link-container {
+    text-align: center;
+}
+
+.login-header {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.login-title {
+    font-size: 56px;
+    margin-bottom: 10px;
+}
+
+.login-subtitle {
+    color: #b3b3b3;
+    font-size: 18px;
+}
+
+.login-card {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 40px;
+}
+
+.error-message {
+    background: #3a1515;
+    color: #ff8a8a;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.success-message {
+    background: #14331d;
+    color: #7cff9d;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group-password {
+    margin-bottom: 30px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 14px;
+    background: #1e1e1e;
+    color: white;
+    font-size: 16px;
+}
+
+.auth-button {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 25px;
+    color: #b3b3b3;
+}
+
+.register-header {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.register-title {
+    font-size: 56px;
+    margin-bottom: 10px;
+}
+
+.register-subtitle {
+    color: #b3b3b3;
+    font-size: 18px;
+}
+
+.register-card {
+    max-width: 550px;
+    margin: 0 auto;
+    padding: 40px;
+}
+
+.logout-form {
+    display: inline;
+    margin: 0;
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: inherit;
+}
+
+.hero-section {
+    padding: 120px 40px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #1a1a1a, #111111);
+    margin-top: 30px;
+    margin-bottom: 50px;
+    text-align: center;
+    border: 1px solid #2a2a2a;
+}
+
+.hero-badge {
+    color: #ff9f6b;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.hero-title {
+    font-size: 72px;
+    margin-bottom: 20px;
+    line-height: 1;
+}
+
+.hero-description {
+    max-width: 700px;
+    margin: auto;
+    color: #b3b3b3;
+    font-size: 20px;
+}
+
+.hero-search {
+    max-width: 700px;
+    margin: auto;
+}
+
+.home-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.home-card {
+    padding: 25px;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.review-header {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.review-title {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.review-subtitle {
+    color: #b3b3b3;
+    font-size: 18px;
+}
+
+.review-form-card {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.review-album-info {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.review-album-cover {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.review-album-title {
+    margin-bottom: 10px;
+}
+
+.review-album-description {
+    color: #b3b3b3;
+    font-size: 15px;
+}
+
+.review-textarea {
+    width: 100%;
+    min-height: 180px;
+    padding: 16px;
+    border-radius: 14px;
+    border: none;
+    resize: vertical;
+    font-size: 16px;
+    background: #1e1e1e;
+    color: white;
+}
+
+.review-title-input {
+    width: 100%;
+    padding: 16px;
+    border-radius: 14px;
+    border: none;
+    font-size: 16px;
+    background: #1e1e1e;
+    color: white;
+    box-sizing: border-box;
+}
+
+.rating-label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.review-details-card {
+    padding: 40px;
+}
+
+.review-details-layout {
+    display: flex;
+    gap: 35px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.review-details-cover {
+    width: 260px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+}
+
+.review-details-content {
+    flex: 1;
+}
+
+.review-details-title {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+.review-details-album-title {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.review-details-meta {
+    color: #b3b3b3;
+    margin-bottom: 25px;
+    font-size: 16px;
+}
+
+.review-details-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.review-rating-badge {
+    background: #202020;
+    border: 1px solid #303030;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.review-author {
+    color: #b3b3b3;
+}
+
+.review-content-box {
+    background: #181818;
+    border: 1px solid #2a2a2a;
+    border-radius: 18px;
+    padding: 28px;
+}
+
+.review-content-text {
+    margin: 0;
+    line-height: 1.9;
+    font-size: 18px;
+    white-space: pre-wrap;
+}
+
+.review-likes {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.review-owner-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.edit-review-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    height: 42px;
+    box-sizing: border-box;
+}
+
+.review-delete-button {
+    padding: 10px 16px;
+    border-radius: 10px;
+}
+
+.comments-title {
+    margin-top: 50px;
+    margin-bottom: 25px;
+    font-size: 30px;
+}
+
+.comments-form-card {
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+.comment-textarea {
+    width: 100%;
+    min-height: 140px;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    resize: vertical;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.comment-card {
+    padding: 22px;
+    margin-bottom: 16px;
+    border-radius: 16px;
+}
+
+.comment-content {
+    line-height: 1.8;
+    margin-bottom: 12px;
+}
+
+.comment-author {
+    color: #b3b3b3;
+}
+
+.comment-actions {
+    margin-top: 12px;
+}
+
+.comment-edit-textarea {
+    width: 100%;
+    min-height: 80px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.comment-delete-form {
+    margin-top: 10px;
+}
+
+.back-to-album {
+    text-align: center;
+}
+
+.favorites-header {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.favorites-title {
+    font-size: 56px;
+    margin-bottom: 10px;
+}
+
+.favorites-subtitle {
+    color: #b3b3b3;
+    font-size: 18px;
+}
+
+.favorites-empty-card {
+    text-align: center;
+    padding: 60px;
+}
+
+.favorites-empty-text {
+    color: #b3b3b3;
+}
+
+.profile-header {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.profile-page-title {
+    font-size: 56px;
+    margin-bottom: 10px;
+}
+
+.profile-page-subtitle {
+    color: #b3b3b3;
+    font-size: 18px;
+}
+
+.profile-user-card {
+    padding: 40px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.profile-username {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.profile-user-role {
+    color: #b3b3b3;
+}
+
+.profile-section-title {
+    margin-bottom: 25px;
+}
+
+.profile-empty-reviews {
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.profile-review-card {
+    height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.profile-review-title {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    min-height: 72px;
+}
+
+.profile-empty-favorites {
+    padding: 40px;
+    text-align: center;
+}
+
+.profile-album-meta {
+    color: #b3b3b3;
+}
+
+.hero-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.hero-logo img {
+    width: 110px;
+    height: 90px;
+}
+
+.hero-logo .hero-title {
+    margin: 0;
 }

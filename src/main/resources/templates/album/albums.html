@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+
+    <title>Альбомы</title>
+    <link rel="icon" type="image/png" th:href="@{/images/peach.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+  </head>
+  <body>
+
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+  <div class="container">
+
+    <div class="hero">
+
+      <h1>Альбомы</h1>
+
+      <p>
+        Открывайте новую музыку, отзывы и оценки
+      </p>
+
+      <form th:action="@{/albums/search}"
+            method="get"
+            class="search-bar">
+
+        <input type="text"
+               name="query"
+               placeholder="Поиск альбомов...">
+
+        <button type="submit">
+          Поиск
+        </button>
+
+      </form>
+
+    </div>
+
+    <div class="center"
+         th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+
+      <a th:href="@{/albums/new}">
+        <button>
+          Создать альбом
+        </button>
+      </a>
+
+    </div>
+
+    <br>
+
+    <div th:unless="${externalResults}">
+
+      <div class="album-grid">
+
+        <div class="album-card"
+             th:each="album : ${albums}">
+
+          <img th:if="${album.coverUrl != null}"
+               th:src="${album.coverUrl}"
+               alt="Обложка альбома"
+               class="album-cover">
+
+          <div th:unless="${album.coverUrl != null}"
+               class="album-cover-placeholder">
+
+            Нет обложки
+
+          </div>
+
+          <h3 th:text="${album.title}"></h3>
+
+          <p class="album-meta">
+
+            <span th:text="${album.artist}"></span>
+
+            •
+
+            <span th:text="${album.genre}"></span>
+
+            •
+
+            <span th:text="${album.releaseYear}"></span>
+
+          </p>
+
+          <a th:href="@{/albums/{id}(id=${album.id})}">
+            Открыть альбом
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div th:if="${externalResults}">
+
+      <h2 class="section-title">
+        Альбомы, найденные в интернете
+      </h2>
+
+      <div class="album-grid">
+
+        <div class="album-card"
+             th:each="album : ${albums}">
+
+          <img th:if="${album.coverUrl != null}"
+               th:src="${album.coverUrl}"
+               alt="Обложка альбома"
+               class="album-cover">
+
+          <div th:unless="${album.coverUrl != null}"
+               class="album-cover-placeholder">
+
+            Нет обложки
+
+          </div>
+
+          <h3 th:text="${album.title}"></h3>
+
+          <p class="album-meta">
+
+            <span th:text="${album.artist}"></span>
+
+            •
+
+            <span th:text="${album.genre}"></span>
+
+            •
+
+            <span th:text="${album.releaseYear}"></span>
+
+          </p>
+
+          <form th:action="@{/albums/import}"
+                method="post">
+
+            <input type="hidden"
+                   name="coverUrl"
+                   th:value="${album.coverUrl}">
+
+            <input type="hidden"
+                   name="musicBrainzId"
+                   th:value="${album.musicBrainzId}">
+
+            <input type="hidden"
+                   name="title"
+                   th:value="${album.title}">
+
+            <input type="hidden"
+                   name="artist"
+                   th:value="${album.artist}">
+
+            <input type="hidden"
+                   name="releaseYear"
+                   th:value="${album.releaseYear}">
+
+            <input type="hidden"
+                   name="genre"
+                   th:value="${album.genre}">
+
+            <button type="submit">
+              Открыть альбом
+            </button>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  </body>
+</html>
