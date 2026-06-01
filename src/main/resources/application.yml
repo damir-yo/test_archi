@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5437/peachub
+    url: jdbc:postgresql://postgres:5432/peachub
     username: postgres
     password: 12345
 
